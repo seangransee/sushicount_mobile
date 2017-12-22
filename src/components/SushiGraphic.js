@@ -36,7 +36,7 @@ class SushiGraphic extends React.Component {
     for (let i = 0; i < ANIMATION_IMAGES.length; i++) {
       this.setTimeout(() => {
         this.setState(({ imageNum }) => ({
-          imageNum: imageNum + 1
+          imageNum: (imageNum + 1) % ANIMATION_IMAGES.length
         }))
       }, BITE_DURATION * i)
     }
@@ -52,7 +52,7 @@ class SushiGraphic extends React.Component {
         toValue: 1,
         duration: PULSE_DURATION
       }),
-      Animated.delay((ANIMATION_IMAGES.length - 1) * BITE_DURATION),
+      Animated.delay(BITE_DURATION * (ANIMATION_IMAGES.length - 2)),
       Animated.timing(this.state.scale, {
         toValue: MAX_SCALE,
         duration: PULSE_DURATION
@@ -68,19 +68,14 @@ class SushiGraphic extends React.Component {
     return (
       <TouchableWithoutFeedback
         onPress={() => {
-          this.props.incrementCount()
           Vibration.vibrate(VIBRATE_DURATION)
-
+          this.props.incrementCount()
           this.eatingAnimation()
           this.pulseAnimation()
         }}
       >
         <Animated.Image
-          source={
-            ANIMATION_IMAGES[
-              parseInt(this.state.imageNum) % ANIMATION_IMAGES.length
-            ]
-          }
+          source={ANIMATION_IMAGES[this.state.imageNum]}
           style={{
             height: SUSHI_HEIGHT,
             transform: [

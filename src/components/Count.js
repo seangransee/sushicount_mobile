@@ -4,6 +4,8 @@ import { Text, Animated } from "react-native"
 ANIMATION_DURATION = 100
 MAX_SCALE = 1.1
 FONT_SIZE = 220
+COLOR = "#D9B384"
+FONT = "Helvetica"
 
 class Count extends React.Component {
   constructor(props) {
@@ -36,7 +38,8 @@ class Count extends React.Component {
       <Animated.Text
         style={{
           fontSize: FONT_SIZE,
-          color: "#d9b384",
+          color: COLOR,
+          fontFamily: FONT,
           transform: [
             { scaleX: this.state.scale },
             { scaleY: this.state.scale }
