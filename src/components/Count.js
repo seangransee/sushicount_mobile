@@ -15,6 +15,10 @@ class Count extends React.Component {
   }
 
   componentWillReceiveProps({ count: newCount }) {
+    if (this.props.count !== newCount) this.pulseAnimation()
+  }
+
+  pulseAnimation() {
     Animated.sequence([
       Animated.timing(this.state.scale, {
         toValue: MAX_SCALE,

@@ -1,6 +1,8 @@
 import React from "react"
 import { Image, TouchableWithoutFeedback, Alert, View } from "react-native"
 
+NEW_MEAL_WIDTH = 80
+
 class NewMeal extends React.Component {
   render() {
     return (
@@ -16,7 +18,7 @@ class NewMeal extends React.Component {
         <Image
           source={require("../img/new_meal.png")}
           resizeMode="contain"
-          style={{ width: 80 }}
+          style={{ width: NEW_MEAL_WIDTH }}
         />
       </TouchableWithoutFeedback>
     )

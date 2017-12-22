@@ -3,12 +3,12 @@ import { TouchableWithoutFeedback, Animated, Vibration } from "react-native"
 import reactMixin from "react-mixin"
 import TimerMixin from "react-timer-mixin"
 
-const SCALE = 1.2
-const SUSHI_WIDTH = 250 * SCALE
-const SUSHI_HEIGHT = 154 * SCALE
-const SMALL_SUSHI_SCALE = 0.95
-const ANIMATION_DURATION = 100
+const SUSHI_HEIGHT = 185
+const MIN_SCALE = 0.95
+const MAX_SCALE = 1.2
+const PULSE_DURATION = 100
 const BITE_DURATION = 250
+const VIBRATE_DURATION = 100
 
 const ANIMATION_IMAGES = [
   require("../img/sushi_0.png"),
@@ -27,10 +27,41 @@ class SushiGraphic extends React.Component {
     super(props)
 
     this.state = {
-      width: new Animated.Value(SUSHI_WIDTH),
-      height: new Animated.Value(SUSHI_HEIGHT),
+      scale: new Animated.Value(1),
       imageNum: 0
     }
+  }
+
+  eatingAnimation() {
+    for (let i = 0; i < ANIMATION_IMAGES.length; i++) {
+      this.setTimeout(() => {
+        this.setState(({ imageNum }) => ({
+          imageNum: imageNum + 1
+        }))
+      }, BITE_DURATION * i)
+    }
+  }
+
+  pulseAnimation() {
+    Animated.sequence([
+      Animated.timing(this.state.scale, {
+        toValue: MIN_SCALE,
+        duration: PULSE_DURATION
+      }),
+      Animated.timing(this.state.scale, {
+        toValue: 1,
+        duration: PULSE_DURATION
+      }),
+      Animated.delay((ANIMATION_IMAGES.length - 1) * BITE_DURATION),
+      Animated.timing(this.state.scale, {
+        toValue: MAX_SCALE,
+        duration: PULSE_DURATION
+      }),
+      Animated.timing(this.state.scale, {
+        toValue: 1,
+        duration: PULSE_DURATION
+      })
+    ]).start()
   }
 
   render() {
@@ -38,13 +69,10 @@ class SushiGraphic extends React.Component {
       <TouchableWithoutFeedback
         onPress={() => {
           this.props.incrementCount()
-          Vibration.vibrate(100)
+          Vibration.vibrate(VIBRATE_DURATION)
 
-          for (let i = 0; i < ANIMATION_IMAGES.length; i++) {
-            this.setTimeout(() => {
-              this.setState(({ imageNum }) => ({ imageNum: imageNum + 1 }))
-            }, BITE_DURATION * i)
-          }
+          this.eatingAnimation()
+          this.pulseAnimation()
         }}
       >
         <Animated.Image
@@ -53,7 +81,14 @@ class SushiGraphic extends React.Component {
               parseInt(this.state.imageNum) % ANIMATION_IMAGES.length
             ]
           }
-          style={{ width: this.state.width, height: this.state.height }}
+          style={{
+            height: SUSHI_HEIGHT,
+            transform: [
+              { scaleX: this.state.scale },
+              { scaleY: this.state.scale }
+            ]
+          }}
+          resizeMode="contain"
         />
       </TouchableWithoutFeedback>
     )
