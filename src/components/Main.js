@@ -24,8 +24,7 @@ export default class Main extends React.Component {
   }
 
   setCount(count) {
-    this.setState({ count })
-    AsyncStorage.setItem("count", String(count))
+    this.setState({ count }, () => AsyncStorage.setItem("count", String(count)))
   }
 
   render() {
