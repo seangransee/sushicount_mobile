@@ -1,5 +1,7 @@
 import React from "react"
 import { TouchableWithoutFeedback, Animated, Vibration } from "react-native"
+import reactMixin from "react-mixin"
+import TimerMixin from "react-timer-mixin"
 
 const SCALE = 1.2
 const SUSHI_WIDTH = 250 * SCALE
@@ -38,33 +40,18 @@ class SushiGraphic extends React.Component {
           this.props.incrementCount()
           Vibration.vibrate(100)
 
-          Animated.sequence([
-            Animated.parallel([
-              Animated.timing(this.state.width, {
-                toValue: SUSHI_WIDTH * 0.9,
-                duration: ANIMATION_DURATION
-              }),
-              Animated.timing(this.state.height, {
-                toValue: SUSHI_HEIGHT * 0.9,
-                duration: ANIMATION_DURATION
-              })
-            ]),
-            Animated.parallel([
-              Animated.timing(this.state.width, {
-                toValue: SUSHI_WIDTH,
-                duration: ANIMATION_DURATION
-              }),
-              Animated.timing(this.state.height, {
-                toValue: SUSHI_HEIGHT,
-                duration: ANIMATION_DURATION
-              })
-            ])
-          ]).start()
+          for (let i = 0; i < ANIMATION_IMAGES.length; i++) {
+            this.setTimeout(() => {
+              this.setState(({ imageNum }) => ({ imageNum: imageNum + 1 }))
+            }, BITE_DURATION * i)
+          }
         }}
       >
         <Animated.Image
           source={
-            ANIMATION_IMAGES[this.state.imageNum % ANIMATION_IMAGES.length]
+            ANIMATION_IMAGES[
+              parseInt(this.state.imageNum) % ANIMATION_IMAGES.length
+            ]
           }
           style={{ width: this.state.width, height: this.state.height }}
         />
@@ -72,5 +59,7 @@ class SushiGraphic extends React.Component {
     )
   }
 }
+
+reactMixin(SushiGraphic.prototype, TimerMixin)
 
 export default SushiGraphic
