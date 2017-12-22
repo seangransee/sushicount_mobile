@@ -2,7 +2,7 @@ import React from "react"
 import { Text, Animated } from "react-native"
 
 ANIMATION_DURATION = 100
-MAX_SCALE = 1.03
+MAX_SCALE = 1.1
 FONT_SIZE = 220
 
 class Count extends React.Component {
