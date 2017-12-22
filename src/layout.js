@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native"
+import { StyleSheet, Dimensions } from "react-native"
 
 export default StyleSheet.create({
   container: {
@@ -8,7 +8,9 @@ export default StyleSheet.create({
     justifyContent: "space-between"
   },
   newMeal: {
-    alignSelf: "flex-end"
+    alignSelf: "flex-end",
+    position: "absolute",
+    top: Dimensions.get("window").height >= 812 ? 0 : -15 // account for iPhone X notch
   },
   sushiGraphic: {
     position: "absolute",
