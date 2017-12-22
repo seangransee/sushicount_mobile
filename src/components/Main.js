@@ -11,13 +11,11 @@ export default class Main extends React.Component {
     super(props)
 
     this.state = {
-      loading: true,
       count: 0
     }
 
     AsyncStorage.getItem("count").then(count => {
       this.setState({
-        loading: false,
         count: parseInt(count || 0)
       })
     })
@@ -28,10 +26,6 @@ export default class Main extends React.Component {
   }
 
   render() {
-    if (this.state.loading) {
-      return null
-    }
-
     return (
       <View style={layout.container}>
         <View style={layout.newMeal}>

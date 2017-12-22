@@ -68,10 +68,12 @@ class SushiGraphic extends React.Component {
     return (
       <TouchableWithoutFeedback
         onPress={() => {
-          Vibration.vibrate(VIBRATE_DURATION)
-          this.props.incrementCount()
-          this.eatingAnimation()
-          this.pulseAnimation()
+          if (this.state.imageNum === 0) {
+            Vibration.vibrate(VIBRATE_DURATION)
+            this.props.incrementCount()
+            this.eatingAnimation()
+            this.pulseAnimation()
+          }
         }}
       >
         <Animated.Image
