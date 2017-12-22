@@ -6,7 +6,7 @@ import NewMeal from "./NewMeal"
 import Instructions from "./Instructions"
 import layout from "../layout"
 
-export default class Main extends React.Component {
+class Main extends React.Component {
   constructor(props) {
     super(props)
 
@@ -52,3 +52,5 @@ export default class Main extends React.Component {
     )
   }
 }
+
+export default Main
