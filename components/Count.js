@@ -23,11 +23,9 @@ class Count extends React.Component {
         duration: ANIMATION_DURATION
       })
     ]).start()
-    console.log(this.state.scale)
   }
 
   render() {
-    console.log(this.state.scale)
     return (
       <Animated.Text style={{ fontSize: 220, color: "#d9b384" }}>
         {this.props.count}

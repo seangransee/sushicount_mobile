@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleSheet, View, StatusBar } from "react-native"
+import { StyleSheet, View, AsyncStorage } from "react-native"
 import Count from "./components/Count"
 import SushiGraphic from "./components/SushiGraphic"
 import NewMeal from "./components/NewMeal"
@@ -38,17 +38,33 @@ export default class App extends React.Component {
     super(props)
 
     this.state = {
+      loading: true,
       count: 0
     }
+
+    AsyncStorage.getItem("count").then(count => {
+      this.setState({
+        loading: false,
+        count: parseInt(count || 0)
+      })
+    })
+  }
+
+  setCount(count) {
+    this.setState({ count })
+    AsyncStorage.setItem("count", String(count))
   }
 
   render() {
-    StatusBar.setBarStyle("light-content")
+    if (this.state.loading) {
+      return null
+    }
+
     return (
       <View style={styles.container}>
         <View style={styles.newMeal}>
           {this.state.count > 0 && (
-            <NewMeal resetCount={() => this.setState({ count: 0 })} />
+            <NewMeal resetCount={() => this.setCount(0)} />
           )}
         </View>
         {this.state.count === 0 && (
@@ -63,11 +79,7 @@ export default class App extends React.Component {
         )}
         <View style={styles.sushiGraphic}>
           <SushiGraphic
-            incrementCount={() =>
-              this.setState({
-                count: this.state.count + 1
-              })
-            }
+            incrementCount={() => this.setCount(this.state.count + 1)}
           />
         </View>
       </View>
