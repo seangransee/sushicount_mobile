@@ -2,6 +2,8 @@ import React from "react"
 import { Text, Animated } from "react-native"
 
 ANIMATION_DURATION = 100
+MAX_SCALE = 1.03
+FONT_SIZE = 220
 
 class Count extends React.Component {
   constructor(props) {
@@ -15,7 +17,7 @@ class Count extends React.Component {
   componentWillReceiveProps({ count: newCount }) {
     Animated.sequence([
       Animated.timing(this.state.scale, {
-        toValue: 1.2,
+        toValue: MAX_SCALE,
         duration: ANIMATION_DURATION
       }),
       Animated.timing(this.state.scale, {
@@ -27,7 +29,16 @@ class Count extends React.Component {
 
   render() {
     return (
-      <Animated.Text style={{ fontSize: 220, color: "#d9b384" }}>
+      <Animated.Text
+        style={{
+          fontSize: FONT_SIZE,
+          color: "#d9b384",
+          transform: [
+            { scaleX: this.state.scale },
+            { scaleY: this.state.scale }
+          ]
+        }}
+      >
         {this.props.count}
       </Animated.Text>
     )
