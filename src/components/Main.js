@@ -1,5 +1,5 @@
 import React from "react"
-import { View, AsyncStorage } from "react-native"
+import { View, AsyncStorage, StatusBar } from "react-native"
 import Count from "./Count"
 import SushiGraphic from "./SushiGraphic"
 import NewMeal from "./NewMeal"
@@ -26,6 +26,8 @@ class Main extends React.Component {
   }
 
   render() {
+    StatusBar.setHidden(true)
+
     return (
       <View style={layout.container}>
         <View style={layout.newMeal}>
