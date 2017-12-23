@@ -9,8 +9,7 @@ export default StyleSheet.create({
   },
   newMeal: {
     alignSelf: "flex-end",
-    position: "absolute",
-    top: Dimensions.get("window").height >= 812 ? 0 : -15 // account for iPhone X notch
+    position: "absolute"
   },
   sushiGraphic: {
     position: "absolute",
