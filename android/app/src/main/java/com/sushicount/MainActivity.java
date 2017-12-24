@@ -1,4 +1,4 @@
-package com.sushicount;
+package com.seangransee.sushicount;
 
 import com.facebook.react.ReactActivity;
 
