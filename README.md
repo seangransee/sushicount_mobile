@@ -8,7 +8,7 @@
 
 ## Marketing site
 
-### sushicount.com
+### [sushicount.com](http://sushicount.com)
 
 ## Install requirements
 
